@@ -38,30 +38,6 @@ log "Welcome to the bootstrap script!"
 WORK_DIR=$(mktemp -d)
 log "Using work directory: ${WORK_DIR}"
 
-log "Checking if Nix is installed..."
-if ! command -v nix &>/dev/null; then
-    log "Installing Nix..."
-    curl -sL -o nix-installer https://install.determinate.systems/nix/nix-installer-aarch64-darwin
-    chmod +x nix-installer
-
-    ./nix-installer \
-        --logger pretty \
-        --extra-conf "sandbox = false" \
-        --extra-conf "trusted-users = josh"
-
-    log "Validating Nix installation..."
-    ./nix-installer self-test --logger pretty
-
-    success "Nix installed successfully!"
-fi
-
-log "Checking if rosetta is installed..."
-if [[ ! -d /usr/libexec/rosetta ]]; then
-    log "Installing rosetta..."
-    sudo softwareupdate --install-rosetta --agree-to-license
-    success "Rosetta installed successfully!"
-fi
-
 log "Checking if xcode is installed..."
 if ! command -v xcode-select &>/dev/null; then
     log "Installing xcode..."
@@ -85,4 +61,28 @@ if ! command -v xcode-select &>/dev/null; then
     fi
 
     /usr/bin/sudo "/bin/rm" "-f" "${clt_placeholder}"
+fi
+
+log "Checking if rosetta is installed..."
+if [[ ! -d /usr/libexec/rosetta ]]; then
+    log "Installing rosetta..."
+    sudo softwareupdate --install-rosetta --agree-to-license
+    success "Rosetta installed successfully!"
+fi
+
+log "Checking if Nix is installed..."
+if ! command -v nix &>/dev/null; then
+    log "Installing Nix..."
+    curl -sL -o nix-installer https://install.determinate.systems/nix/nix-installer-aarch64-darwin
+    chmod +x nix-installer
+
+    ./nix-installer \
+        --logger pretty \
+        --extra-conf "sandbox = false" \
+        --extra-conf "trusted-users = josh"
+
+    log "Validating Nix installation..."
+    ./nix-installer self-test --logger pretty
+
+    success "Nix installed successfully!"
 fi
