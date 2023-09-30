@@ -1,25 +1,45 @@
 {
-  description = "MacOS configuration";
-
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-23.05-darwin"; # newest version as of may 2023, probably needs to get updated in november
-    home-manager.url = "github:nix-community/home-manager/release-23.05"; # ...
+    # Principle inputs (updated by `nix run .#update`)
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nix-darwin.url = "github:lnl7/nix-darwin/master";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    darwin.url = "github:lnl7/nix-darwin";
-    darwin.inputs.nixpkgs.follows = "nixpkgs"; # ...
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    nixos-flake.url = "github:srid/nixos-flake";
   };
 
-  # add the inputs declared above to the argument attribute set
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    darwin,
-  }: {
-    darwinConfigurations."office" = darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      modules = [./hosts/office/default.nix];
+  outputs = inputs @ {self, ...}:
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = ["aarch64-darwin"];
+
+      imports = [inputs.nixos-flake.flakeModule];
+
+      flake = let
+        username = "josh";
+      in {
+        darwinConfigurations.office = self.nixos-flake.lib.mkMacosSystem {
+          nixpkgs.hostPlatform = "aarch64-darwin";
+          imports = [
+            ./hosts/office
+
+            ./common/darwin/brew.nix
+            ./common/darwin/nix.nix
+            ./common/darwin/system.nix
+
+            self.darwinModules.home-manager
+            {
+              home-manager.users.${username} = {
+                imports = [
+                  ./common/darwin/home.nix
+                ];
+                home.stateVersion = "23.05";
+              };
+            }
+          ];
+        };
+      };
     };
-  };
 }
