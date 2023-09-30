@@ -63,10 +63,7 @@ if ! command -v nix &>/dev/null; then
 fi
 
 # shellcheck disable=SC1091
-source /etc/zshrc
-
-# shellcheck disable=SC1090
-source ~/.zprofile
+source /etc/bashrc
 
 log "Check if repo is cloned..."
 if [[ ! -d ~/code/mac ]]; then
