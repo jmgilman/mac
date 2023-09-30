@@ -62,8 +62,11 @@ if ! command -v nix &>/dev/null; then
     success "Nix installed successfully!"
 fi
 
+log "Configuring environment..."
+set +o nounset
 # shellcheck disable=SC1091
-source /etc/bashrc
+source "/etc/bashrc"
+set -o nounset
 
 log "Check if repo is cloned..."
 if [[ ! -d ~/code/mac ]]; then
