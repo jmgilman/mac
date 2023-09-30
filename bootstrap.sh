@@ -76,6 +76,7 @@ if [[ ! -d ~/code/mac ]]; then
 fi
 
 log "Activating configuration..."
+sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.bak
 nix --extra-experimental-features nix-command run --extra-experimental-features flakes nix-darwin -- switch --flake ~/code/mac
 
 success "Done!"
