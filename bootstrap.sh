@@ -38,36 +38,11 @@ log "Welcome to the bootstrap script!"
 WORK_DIR=$(mktemp -d)
 log "Using work directory: ${WORK_DIR}"
 
-log "Checking if xcode is installed..."
-if ! command -v xcode-select &>/dev/null; then
-    log "Installing xcode..."
-
-    # This temporary file prompts the 'softwareupdate' utility to list the Command Line Tools
-    clt_placeholder="/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
-    /usr/bin/sudo /usr/bin/touch "${clt_placeholder}"
-
-    clt_label_command="/usr/sbin/softwareupdate -l |
-                        grep -B 1 -E 'Command Line Tools' |
-                        awk -F'*' '/^ *\\*/ {print \$2}' |
-                        sed -e 's/^ *Label: //' -e 's/^ *//' |
-                        sort -V |
-                        tail -n1"
-    clt_label="$(chomp "$(/bin/bash -c "${clt_label_command}")")"
-
-    if [[ -n "${clt_label}" ]]; then
-        log "Installing ${clt_label}"
-        /usr/bin/sudo "/usr/sbin/softwareupdate" "-i" "${clt_label}"
-        /usr/bin/sudo "/usr/bin/xcode-select" "--switch" "/Library/Developer/CommandLineTools"
-    fi
-
-    /usr/bin/sudo "/bin/rm" "-f" "${clt_placeholder}"
-fi
-
-log "Checking if rosetta is installed..."
-if [[ ! -d /usr/libexec/rosetta ]]; then
-    log "Installing rosetta..."
-    sudo softwareupdate --install-rosetta --agree-to-license
-    success "Rosetta installed successfully!"
+log "Checking if homebrew is installed..."
+if ! command -v brew &>/dev/null; then
+    log "Installing homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    echo "eval $(/opt/homebrew/bin/brew shellenv)" >>~/.zprofile
 fi
 
 log "Checking if Nix is installed..."
@@ -76,7 +51,7 @@ if ! command -v nix &>/dev/null; then
     curl -sL -o nix-installer https://install.determinate.systems/nix/nix-installer-aarch64-darwin
     chmod +x nix-installer
 
-    ./nix-installer \
+    ./nix-installer install macos \
         --logger pretty \
         --extra-conf "sandbox = false" \
         --extra-conf "trusted-users = josh"
@@ -86,3 +61,21 @@ if ! command -v nix &>/dev/null; then
 
     success "Nix installed successfully!"
 fi
+
+# shellcheck disable=SC1091
+source /etc/zshrc
+
+# shellcheck disable=SC1090
+source ~/.zprofile
+
+log "Check if repo is cloned..."
+if [[ ! -d ~/code/mac ]]; then
+    log "Cloning repo..."
+    mkdir -p ~/code
+    git clone https://github.com/jmgilman/mac ~/code/mac
+fi
+
+log "Activating configuration..."
+nix --extra-experimental-features nix-command run --extra-experimental-features flakes nix-darwin -- switch --flake ~/code/mac
+
+success "Done!"
