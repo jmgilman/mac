@@ -5,12 +5,12 @@
       github = {
         user = "jmgilman";
         hostname = "github.com";
-        identityfile = "~/.ssh/id_ed25519_office";
+        identityFile = "~/.ssh/id_ed25519_office";
       };
       work = {
         user = "josh";
         hostname = "work.gilman.io";
-        identityfile = "~/.ssh/id_ed25519_office";
+        identityFile = "~/.ssh/id_ed25519_office";
       };
     };
   };
