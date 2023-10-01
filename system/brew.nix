@@ -3,6 +3,7 @@
     enable = true;
     onActivation.autoUpdate = true;
     casks = [
+      "1password"
       "discord"
       "element"
       "iterm2"
