@@ -10,6 +10,7 @@
           ./gpg.nix
           ./navi.nix
           ./packages.nix
+          ./ssh.nix
           ./starship.nix
           ./tmux.nix
           ./zsh.nix
