@@ -15,29 +15,18 @@
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["aarch64-darwin"];
 
-      imports = [inputs.nixos-flake.flakeModule];
+      imports = [
+        inputs.nixos-flake.flakeModule
+        ./home
+        ./system
+      ];
 
-      flake = let
-        username = "josh";
-      in {
+      flake = {
         darwinConfigurations.office = self.nixos-flake.lib.mkMacosSystem {
           nixpkgs.hostPlatform = "aarch64-darwin";
           imports = [
             ./hosts/office
-
-            ./common/darwin/brew.nix
-            ./common/darwin/nix.nix
-            ./common/darwin/system.nix
-
-            self.darwinModules.home-manager
-            {
-              home-manager.users.${username} = {
-                imports = [
-                  ./common/darwin/home.nix
-                ];
-                home.stateVersion = "23.05";
-              };
-            }
+            self.systemModules.default
           ];
         };
       };

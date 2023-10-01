@@ -1,12 +1,4 @@
 {pkgs, ...}: {
-  environment.variables.LANG = "en_US.UTF-8";
-
-  programs.gnupg.agent.enable = true;
-  programs.gnupg.agent.enableSSHSupport = false;
-  programs.zsh.enable = true;
-
-  services.nix-daemon.enable = true;
-
   system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false;
   system.defaults.NSGlobalDomain.InitialKeyRepeat = 10;
   system.defaults.NSGlobalDomain.KeyRepeat = 1;
