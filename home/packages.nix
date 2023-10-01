@@ -16,6 +16,7 @@
     dasel
     #diffoscope
     dig
+    earthly
     eza
     fd
     fzf
