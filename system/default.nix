@@ -4,6 +4,7 @@
       common = {
         imports = [
           ./brew.nix
+          ./gpg.nix
           ./macos.nix
           ./nix.nix
           ./packages.nix

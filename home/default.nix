@@ -6,8 +6,10 @@
         imports = [
           ./bat.nix
           ./direnv.nix
+          ./git.nix
           ./navi.nix
           ./packages.nix
+          ./starship.nix
           ./tmux.nix
           ./zsh.nix
         ];

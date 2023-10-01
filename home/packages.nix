@@ -1,6 +1,9 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     alejandra
+    amazon-ecr-credential-helper
+    awscli2
+    aws-vault
     bat-extras.batman
     bat-extras.batgrep
     bat-extras.batdiff
@@ -9,6 +12,7 @@
     bottom
     broot
     cheat
+    consul
     dasel
     #diffoscope
     dig
@@ -16,11 +20,10 @@
     fd
     fzf
     gh
-    go
-    go-outline
+    gnupg
+    google-cloud-sdk
     gopass
-    gopls
-    helix
+    kubectl
     kubernetes-helm
     httpie
     jc
@@ -28,14 +31,20 @@
     krew
     kubectl
     magic-wormhole
-    python310Packages.pipx
+    nomad
+    packer
     ripgrep
+    shellcheck
+    shfmt
     starship
     step-cli
-    talosctl
+    terraform
+    terragrunt
     tldr
     vim
     yj
     yq-go
+    yubikey-manager
+    vault
   ];
 }
