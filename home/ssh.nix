@@ -5,7 +5,7 @@
       github = {
         user = "jmgilman";
         hostname = "github.com";
-        identitifyfile = "~/.ssh/id_ed25519_office";
+        identityfile = "~/.ssh/id_ed25519_office";
       };
       work = {
         user = "josh";
