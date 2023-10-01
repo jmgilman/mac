@@ -1,5 +1,41 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     alejandra
+    bat-extras.batman
+    bat-extras.batgrep
+    bat-extras.batdiff
+    bat-extras.batwatch
+    bat-extras.prettybat
+    bottom
+    broot
+    cheat
+    dasel
+    #diffoscope
+    dig
+    eza
+    fd
+    fzf
+    gh
+    go
+    go-outline
+    gopass
+    gopls
+    helix
+    kubernetes-helm
+    httpie
+    jc
+    jq
+    krew
+    kubectl
+    magic-wormhole
+    python310Packages.pipx
+    ripgrep
+    starship
+    step-cli
+    talosctl
+    tldr
+    vim
+    yj
+    yq-go
   ];
 }
