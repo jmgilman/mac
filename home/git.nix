@@ -66,7 +66,7 @@
       push.followTags = true;
 
       # Use SSH instead of HTTPS
-      url."git@github.com:".insteadOf = "https://github.com/";
+      #url."git@github.com:".insteadOf = "https://github.com/";
     };
 
     # Use delta for generating diffs
