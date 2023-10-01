@@ -7,6 +7,7 @@
           ./bat.nix
           ./direnv.nix
           ./git.nix
+          ./gpg.nix
           ./navi.nix
           ./packages.nix
           ./starship.nix

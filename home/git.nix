@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   programs.git = {
     enable = true;
-    package = pkg.gitFull;
+    package = pkgs.gitFull;
 
     aliases = {
       # View abbreviated SHA, description, and history graph of the latest 20 commits
