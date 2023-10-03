@@ -22,7 +22,7 @@
       ];
 
       flake = {
-        darwinConfigurations.office = self.nixos-flake.lib.mkMacosSystem {
+        darwinConfigurations.studio = self.nixos-flake.lib.mkMacosSystem {
           nixpkgs.hostPlatform = "aarch64-darwin";
           imports = [
             ./hosts/office
