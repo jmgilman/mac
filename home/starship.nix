@@ -2,6 +2,9 @@
   programs.starship = {
     enable = true;
     settings = {
+      battery = {
+        disabled = true;
+      };
       directory = {
         style = "green";
         truncate_to_repo = false;
