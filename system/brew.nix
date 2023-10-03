@@ -13,6 +13,7 @@
       "multipass"
       "orbstack"
       "postman"
+      "raycast"
       "readdle-spark"
       "signal"
       "slack"
