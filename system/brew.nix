@@ -6,6 +6,7 @@
       "1password"
       "discord"
       "element"
+      "hyperkey"
       "iterm2"
       "logseq"
       "microsoft-remote-desktop"
